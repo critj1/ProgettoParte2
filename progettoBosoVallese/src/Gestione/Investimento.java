@@ -15,6 +15,15 @@ public class Investimento {
         this.guadagno = calcolaGuadagno();
     }
 
+    public Investimento(int settimane,double guadagno){
+        this.soldiInvestiti = 0;
+        this.settimane = settimane;
+        this.percentuale = 0;
+        this.soglia = 0;
+        this.guadagno = guadagno;
+
+    }
+
     private double calcolaGuadagno() {
         int n = (int) (Math.random() * 100);
         return (n < soglia) ? soldiInvestiti * (1 + (percentuale / 100.0)) : soldiInvestiti * (1 - (percentuale / 100.0));
@@ -27,5 +36,9 @@ public class Investimento {
 
     public double getGuadagno() {
         return guadagno;
+    }
+
+    public int getSettimane() {
+        return settimane;
     }
 }

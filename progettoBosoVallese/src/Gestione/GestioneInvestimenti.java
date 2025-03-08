@@ -33,4 +33,8 @@ public class GestioneInvestimenti {
 
         return totaleGuadagno[0];
     }
+
+    public Vector<Investimento> getInvestimenti() {
+        return investimenti;
+    }
 }
