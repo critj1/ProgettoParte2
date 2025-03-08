@@ -15,7 +15,7 @@ public class GestioneUtente {
         gestioneInvestimenti = new GestioneInvestimenti();
         File directory = new File(CARTELLA_DATI);
         if (directory.mkdir()) {
-            System.out.println("creata cartella DatiUtenti");
+            System.out.println("Creata cartella DatiUtenti");
         }
 
     }
@@ -39,7 +39,8 @@ public class GestioneUtente {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Inserisci il tuo nome utente: ");
         String nomeUtente = scanner.nextLine().trim();
-        File fileUtente = new File(CARTELLA_DATI + "/" + nomeUtente + ".txt");
+        String cartellaUtente = CARTELLA_DATI + "/" + nomeUtente;
+        File fileUtente = new File(cartellaUtente + "/data.txt");
 
         if (fileUtente.exists()) {
             System.out.print("Inserisci la tua password: ");
@@ -47,7 +48,7 @@ public class GestioneUtente {
             try (BufferedReader br = new BufferedReader(new FileReader(fileUtente))) {
                 String passwordSalvata = br.readLine();
                 if (!passwordInserita.equals(passwordSalvata)) {
-                    System.out.println("Password errata! Riprova.");
+                    System.out.println("Password o Nome Errati! Riprova.");
                     return caricaUtente();
                 }
                 double portafoglio = Double.parseDouble(br.readLine());
@@ -64,10 +65,10 @@ public class GestioneUtente {
                 }
                 return utente;
             } catch (IOException e) {
-                System.out.print("\nErrore nella scrittura. ");
+                System.out.println("Errore nella lettura del file utente.");
             }
         } else {
-            System.out.print("Nuovo utente! Scegli una password: ");
+            System.out.print("Inserisci la tua password: ");
             String password = scanner.nextLine().trim();
             Utente nuovoUtente = new Utente(nomeUtente, password, 100, 0, 1);
             salvaDatiUtente(nuovoUtente);
@@ -77,7 +78,13 @@ public class GestioneUtente {
     }
 
     public void salvaDatiUtente(Utente utente) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CARTELLA_DATI + "/" + utente.getNome() + ".txt"))) {
+        String cartellaUtente = CARTELLA_DATI + "/" + utente.getNome();
+        File cartella = new File(cartellaUtente);
+        if (!cartella.exists()) {
+            cartella.mkdirs();
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(cartellaUtente + "/data.txt"))) {
             bw.write(utente.getPassword() + "\n");
             bw.write(utente.getPortafoglio() + "\n");
             bw.write(utente.getConto() + "\n");
@@ -87,7 +94,7 @@ public class GestioneUtente {
                 bw.write(investimento.getSettimane() + "," + investimento.getGuadagno() + "\n");
             }
         } catch (IOException e) {
-            System.out.print("\nErrore nella scrittura. ");
+            System.out.println("Errore nella scrittura del file utente.");
         }
     }
 
@@ -100,7 +107,7 @@ public class GestioneUtente {
         System.out.print("Inserisci l'importo da investire: ");
         double importo = ScannerInput.getDouble();
         while (importo > utente.getConto()) {
-            System.out.println("Saldo insufficiente, riprova.");
+            System.out.print("Saldo insufficiente, riprova : ");
             importo = ScannerInput.getDouble();
         }
         utente.investiSoldi(importo);

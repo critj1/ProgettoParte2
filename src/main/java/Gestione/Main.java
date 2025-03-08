@@ -12,8 +12,7 @@ public class Main {
         Utente utente = gestioneUtente.caricaUtente();
         GestioneInvestimenti gestioneInvestimenti = gestioneUtente.getGestioneInvestimenti();
 
-        Menu menu = new Menu(new String[]{"1 --> Preleva", "2 --> Deposita", "3 --> Vedi conto in banca",
-                "4 --> Vedi portafoglio", "5 --> Investi", "6 --> Avanza settimana"});
+        Menu menu = new Menu(new String[]{"Preleva", "Deposita", "Vedi conto in banca", "Vedi portafoglio", "Investi", "Avanza settimana"});
         int settimana = utente.getSettimana();
         int scelta;
         do {

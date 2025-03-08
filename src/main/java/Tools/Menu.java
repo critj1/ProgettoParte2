@@ -12,7 +12,7 @@ public class Menu {
      */
     private void stampa() {
         for (int i = 0; i < opzioni.length; i++) {
-            System.out.println((i + 1) + ") " + opzioni[i]);
+            System.out.println((i + 1) + " --> " + opzioni[i]);
         }
         System.out.println("\n0. ESCI");
     }
