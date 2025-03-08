@@ -1,4 +1,5 @@
 package Tools;
+
 import java.util.Scanner;
 
 public class ScannerInput {
@@ -34,22 +35,23 @@ public class ScannerInput {
 
         return intero;
     }
+
     /**
      * metodo per ricevere un double positivo da tastiera con uno scanner e controllo con try
      * catch
      *
      * @return restituisce un numero double
      */
-	public static double getDouble() {
-		Scanner scanner = new Scanner(System.in);
+    public static double getDouble() {
+        Scanner scanner = new Scanner(System.in);
 
-		double doubleNum = 0;
-		boolean ok;
+        double doubleNum = 0;
+        boolean ok;
 
-		do {
+        do {
 
-			ok = true;
-			try {
+            ok = true;
+            try {
                 String input = scanner.nextLine().trim();
                 doubleNum = Double.parseDouble(input);
 
@@ -57,13 +59,13 @@ public class ScannerInput {
                     System.out.print("\nErrore: inserisci un numero valido.  --> ");
                     ok = false;
                 }
-			} catch (NumberFormatException e) {
-				System.out.print("\nErrore inserisci un numero valido.  --> ");
-				ok = false;
-			}
-		} while (!ok);
+            } catch (NumberFormatException e) {
+                System.out.print("\nErrore inserisci un numero valido.  --> ");
+                ok = false;
+            }
+        } while (!ok);
 
-		return doubleNum;
-	}
+        return doubleNum;
+    }
 }
 

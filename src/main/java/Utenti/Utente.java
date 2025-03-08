@@ -39,9 +39,11 @@ public class Utente {
         portafoglio += 100;
         settimana++;
     }
+
     public void investiSoldi(double importo) {
         conto -= importo;
     }
+
     public void depositaGuadagno(double importo) {
         conto += importo;
     }

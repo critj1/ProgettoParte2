@@ -5,8 +5,8 @@ import java.util.Vector;
 public class GestioneInvestimenti {
     private final Vector<Investimento> investimenti;
 
-    public GestioneInvestimenti(){
-        this.investimenti = new Vector<>(10,5);
+    public GestioneInvestimenti() {
+        this.investimenti = new Vector<>(10, 5);
     }
 
     public void aggiungiInvestimento(Investimento investimento) {

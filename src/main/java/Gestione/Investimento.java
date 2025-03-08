@@ -3,9 +3,9 @@ package Gestione;
 public class Investimento {
     private final double soldiInvestiti;
     private final double guadagno;
-    private int settimane;
     private final int percentuale;
     private final int soglia;
+    private int settimane;
 
     public Investimento(double soldiInvestiti, int settimane, int percentuale, int soglia) {
         this.soldiInvestiti = soldiInvestiti;
@@ -15,7 +15,7 @@ public class Investimento {
         this.guadagno = calcolaGuadagno();
     }
 
-    public Investimento(int settimane,double guadagno){
+    public Investimento(int settimane, double guadagno) {
         this.soldiInvestiti = 0;
         this.settimane = settimane;
         this.percentuale = 0;

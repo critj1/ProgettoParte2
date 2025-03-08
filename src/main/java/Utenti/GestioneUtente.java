@@ -14,10 +14,21 @@ public class GestioneUtente {
     public GestioneUtente() {
         gestioneInvestimenti = new GestioneInvestimenti();
         File directory = new File(CARTELLA_DATI);
-        if (directory.mkdir()){
+        if (directory.mkdir()) {
             System.out.println("creata cartella DatiUtenti");
         }
 
+    }
+
+    private static int sceltaInvestimento() {
+        System.out.print("\nSCEGLI --> ");
+        int scelta = ScannerInput.getIntero();
+        while (scelta > 3 || scelta < 1) {
+            System.out.println("\nERRORE! ");
+            System.out.print("SCEGLI --> ");
+            scelta = ScannerInput.getIntero();
+        }
+        return scelta;
     }
 
     public GestioneInvestimenti getGestioneInvestimenti() {
@@ -42,7 +53,7 @@ public class GestioneUtente {
                 double portafoglio = Double.parseDouble(br.readLine());
                 double conto = Double.parseDouble(br.readLine());
                 int settimana = Integer.parseInt(br.readLine());
-                Utente utente = new Utente(nomeUtente,passwordSalvata,portafoglio, conto, settimana);
+                Utente utente = new Utente(nomeUtente, passwordSalvata, portafoglio, conto, settimana);
 
                 String linea;
                 while ((linea = br.readLine()) != null) {
@@ -106,22 +117,20 @@ public class GestioneUtente {
 
         int percentuale = 0, soglia = 0;
         switch (rischio) {
-            case 1 -> { percentuale = (int) (Math.random() * 10); soglia = 80; }
-            case 2 -> { percentuale = (int) ((Math.random() * 40) + 10); soglia = 50; }
-            case 3 -> { percentuale = (int) ((Math.random() * 50) + 50); soglia = 30; }
+            case 1 -> {
+                percentuale = (int) (Math.random() * 10);
+                soglia = 80;
+            }
+            case 2 -> {
+                percentuale = (int) ((Math.random() * 40) + 10);
+                soglia = 50;
+            }
+            case 3 -> {
+                percentuale = (int) ((Math.random() * 50) + 50);
+                soglia = 30;
+            }
         }
 
         gestioneInvestimenti.aggiungiInvestimento(new Investimento(importo, settimane, percentuale, soglia));
-    }
-
-    private static int sceltaInvestimento(){
-        System.out.print("\nSCEGLI --> ");
-        int scelta = ScannerInput.getIntero();
-        while (scelta > 3 || scelta < 1) {
-            System.out.println("\nERRORE! ");
-            System.out.print("SCEGLI --> ");
-            scelta = ScannerInput.getIntero();
-        }
-        return scelta;
     }
 }
