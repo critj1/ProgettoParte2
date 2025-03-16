@@ -39,7 +39,7 @@ public class Utente {
         }
     }
 
-    private void registraTransazione(String tipo, double importo) {
+    public void registraTransazione(String tipo, double importo) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileTransazioni, true))) {
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             writer.write(timestamp + " - " + tipo + ": " + importo + "\n");
@@ -71,7 +71,6 @@ public class Utente {
     public void nuovaSettimana() {
         portafoglio += 100;
         settimana++;
-        registraTransazione("Stipendio Settimanale", 100);
     }
 
     public void investiSoldi(double importo) {
@@ -79,26 +78,26 @@ public class Utente {
         registraTransazione("Investimento", importo);
     }
 
-    public void depositaGuadagno(double importo) {
+    public boolean depositaGuadagno(double importo) {
         conto += importo;
-        if (importo != 0) {
-            registraTransazione("Guadagno Investimenti", importo);
-        }
+        return importo != 0;
     }
 
-    public void deposita(double importo) {
+    public boolean deposita(double importo) {
         if (importo > 0 && importo <= portafoglio) {
             conto += importo;
             portafoglio -= importo;
-            registraTransazione("Deposito", importo);
+            return true;
         }
+        return false;
     }
 
-    public void preleva(double importo) {
+    public boolean preleva(double importo) {
         if (importo > 0 && importo <= conto) {
             conto -= importo;
             portafoglio += importo;
-            registraTransazione("Prelievo", importo);
+            return true;
         }
+        return false;
     }
 }

@@ -6,24 +6,26 @@
   <artifactId>ITIS_Maven_Example</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>ITIS_Maven_Example</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.release>17</maven.compiler.release>
+    <maven.compiler.release>22</maven.compiler.release>
   </properties>
 
     <dependencies>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-api</artifactId>
-      <version>2.24.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
-      <version>2.24.1</version>
-    </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>22</source>
+          <target>22</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

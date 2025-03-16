@@ -5,11 +5,12 @@ import Gestione.Investimento;
 import Tools.ScannerInput;
 
 import java.io.*;
-import java.util.Scanner;
+
 
 public class GestioneUtente {
     private static final String CARTELLA_DATI = "DatiUtenti";
     private final GestioneInvestimenti gestioneInvestimenti;
+    private Utente utente;
 
     public GestioneUtente() {
         gestioneInvestimenti = new GestioneInvestimenti();
@@ -35,26 +36,24 @@ public class GestioneUtente {
         return gestioneInvestimenti;
     }
 
-    public Utente caricaUtente() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Inserisci il tuo nome utente: ");
-        String nomeUtente = scanner.nextLine().trim();
-        String cartellaUtente = CARTELLA_DATI + "/" + nomeUtente;
+    public Utente getUtente() {
+        return utente;
+    }
+
+    public boolean caricaUtente(String username, String password) {
+        String cartellaUtente = CARTELLA_DATI + "/" + username;
         File fileUtente = new File(cartellaUtente + "/data.txt");
 
         if (fileUtente.exists()) {
-            System.out.print("Inserisci la tua password: ");
-            String passwordInserita = scanner.nextLine().trim();
             try (BufferedReader br = new BufferedReader(new FileReader(fileUtente))) {
                 String passwordSalvata = br.readLine();
-                if (!passwordInserita.equals(passwordSalvata)) {
-                    System.out.println("Password o Nome Errati! Riprova.");
-                    return caricaUtente();
+                if (!password.equals(passwordSalvata)) {
+                    return false;
                 }
                 double portafoglio = Double.parseDouble(br.readLine());
                 double conto = Double.parseDouble(br.readLine());
                 int settimana = Integer.parseInt(br.readLine());
-                Utente utente = new Utente(nomeUtente, passwordSalvata, portafoglio, conto, settimana);
+                this.utente = new Utente(username, passwordSalvata, portafoglio, conto, settimana);
 
                 String linea;
                 while ((linea = br.readLine()) != null) {
@@ -63,21 +62,29 @@ public class GestioneUtente {
                     double guadagno = Double.parseDouble(dati[1]);
                     gestioneInvestimenti.aggiungiInvestimento(new Investimento(settimane, guadagno));
                 }
-                return utente;
+                return true;
             } catch (IOException e) {
                 System.out.println("Errore nella lettura del file utente.");
             }
-        } else {
-            System.out.print("Inserisci la tua password: ");
-            String password = scanner.nextLine().trim();
-            Utente nuovoUtente = new Utente(nomeUtente, password, 100, 0, 1);
-            salvaDatiUtente(nuovoUtente);
-            return nuovoUtente;
         }
-        return null;
+        return false;
     }
 
-    public void salvaDatiUtente(Utente utente) {
+    public boolean registraUtente(String username, String password) {
+        String cartellaUtente = CARTELLA_DATI + "/" + username;
+        File fileUtente = new File(cartellaUtente + "/data.txt");
+
+        if (!fileUtente.exists()) {
+            this.utente = new Utente(username, password, 100, 0, 1);
+            salvaDatiUtente(this.utente,this.gestioneInvestimenti);
+            return true;
+        }
+        return false;
+
+    }
+
+
+    public void salvaDatiUtente(Utente utente,GestioneInvestimenti gestioneInvestimenti) {
         String cartellaUtente = CARTELLA_DATI + "/" + utente.getNome();
         File cartella = new File(cartellaUtente);
         if (!cartella.exists()) {
