@@ -69,35 +69,35 @@ class InvestmentFrame extends JFrame {
         gbc.gridy = 2; panel.add(highRiskButton, gbc);
         gbc.gridy = 3; panel.add(cancelButton, gbc);
 
-        lowRiskButton.addActionListener(_ -> {
+        lowRiskButton.addActionListener(e -> {
             resetPanel();
             termButtons();
         });
-        mediumRiskButton.addActionListener(_ -> {
+        mediumRiskButton.addActionListener(e -> {
             resetPanel();
             termButtons();
 
         });
-        highRiskButton.addActionListener(_ -> {
+        highRiskButton.addActionListener(e -> {
             resetPanel();
             termButtons();
         });
 
-        shortTermButton.addActionListener(_ -> {
+        shortTermButton.addActionListener(e -> {
             resetPanel();
             importButtons();
         });
-        midTermButton.addActionListener(_ -> {
+        midTermButton.addActionListener(e -> {
             resetPanel();
             importButtons();
 
         });
-        longTermButton.addActionListener(_ -> {
+        longTermButton.addActionListener(e -> {
             resetPanel();
             importButtons();
         });
 
-        cancelButton.addActionListener(_ -> {
+        cancelButton.addActionListener(e -> {
             dispose();
         });
 

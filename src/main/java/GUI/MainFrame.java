@@ -125,15 +125,15 @@ public class MainFrame extends JFrame {
         panel.add(salvaEdEsciButton, gbc);
 
         // Action Listeners (Placeholder)
-        depositaButton.addActionListener(_ -> deposita());
-        prelevaButton.addActionListener(_ -> prelieva());
-        settimanaButton.addActionListener(_ -> avanzaSettimana());
+        depositaButton.addActionListener(e -> deposita());
+        prelevaButton.addActionListener(e -> prelieva());
+        settimanaButton.addActionListener(e -> avanzaSettimana());
 
-        newInvestimentoButton.addActionListener(_ -> JOptionPane.showMessageDialog(null, "Nuovo Investimento clicked!"));
-        viewInvestimentiButton.addActionListener(_ -> JOptionPane.showMessageDialog(null, "Guarda Investimenti clicked!"));
-        listaTransazioniButton.addActionListener(_ -> JOptionPane.showMessageDialog(null, "Transazioni clicked!"));
+        newInvestimentoButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Nuovo Investimento clicked!"));
+        viewInvestimentiButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Guarda Investimenti clicked!"));
+        listaTransazioniButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Transazioni clicked!"));
 
-        salvaEdEsciButton.addActionListener(_ -> {
+        salvaEdEsciButton.addActionListener(e -> {
             gestioneUtente.salvaDatiUtente(utente, gestioneInvestimenti);
             JOptionPane.showMessageDialog(null, "Arrivederci");
             System.exit(0);

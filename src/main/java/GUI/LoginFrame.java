@@ -66,14 +66,14 @@ public class LoginFrame extends JFrame {
         gbc.gridx = 1; panel.add(registerButton, gbc);
 
         // Action Listener
-        loginButton.addActionListener(_ -> {
+        loginButton.addActionListener(e -> {
             String username = userText.getText().trim();
             String password = new String(passText.getPassword()).trim();
-            if (!username.isEmpty() && !password.isEmpty()){
-                if (gestioneUtente.caricaUtente(username, password)){
+            if (!username.isEmpty() && !password.isEmpty()) {
+                if (gestioneUtente.caricaUtente(username, password)) {
                     JOptionPane.showMessageDialog(null, "Login Successful!");
-                    dispose();
-                }else {
+                    LoginFrame.this.dispose();
+                } else {
                     JOptionPane.showMessageDialog(null, "Username or Password is incorrect", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
@@ -81,7 +81,7 @@ public class LoginFrame extends JFrame {
             }
         });
 
-        registerButton.addActionListener(_ -> {
+        registerButton.addActionListener(e -> {
             String username = userText.getText().trim();
             String password = new String(passText.getPassword()).trim();
             if (!username.isEmpty() && !password.isEmpty()){
