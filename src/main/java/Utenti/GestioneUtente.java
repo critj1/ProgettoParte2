@@ -2,7 +2,6 @@ package Utenti;
 
 import Gestione.GestioneInvestimenti;
 import Gestione.Investimento;
-import Tools.ScannerInput;
 
 import java.io.*;
 
@@ -19,17 +18,6 @@ public class GestioneUtente {
             System.out.println("Creata cartella DatiUtenti");
         }
 
-    }
-
-    private static int sceltaInvestimento() {
-        System.out.print("\nSCEGLI --> ");
-        int scelta = ScannerInput.getIntero();
-        while (scelta > 3 || scelta < 1) {
-            System.out.println("\nERRORE! ");
-            System.out.print("SCEGLI --> ");
-            scelta = ScannerInput.getIntero();
-        }
-        return scelta;
     }
 
     public GestioneInvestimenti getGestioneInvestimenti() {
@@ -105,46 +93,4 @@ public class GestioneUtente {
         }
     }
 
-    public void gestisciInvestimenti(Utente utente) {
-        if (utente.getConto() <= 0) {
-            System.out.println("Non hai abbastanza soldi nel conto");
-            return;
-        }
-
-        System.out.print("Inserisci l'importo da investire: ");
-        double importo = ScannerInput.getDouble();
-        while (importo > utente.getConto()) {
-            System.out.print("Saldo insufficiente, riprova : ");
-            importo = ScannerInput.getDouble();
-        }
-        utente.investiSoldi(importo);
-
-        System.out.println("1 --> investimento di breve durata");
-        System.out.println("2 --> investimento di media durata");
-        System.out.println("3 --> investimento di lunga durata");
-        int settimane = sceltaInvestimento();
-
-        System.out.println("1 --> investimento a basso rischio");
-        System.out.println("2 --> investimento a medio rischio");
-        System.out.println("3 --> investimento a alto rischio");
-        int rischio = sceltaInvestimento();
-
-        int percentuale = 0, soglia = 0;
-        switch (rischio) {
-            case 1 -> {
-                percentuale = (int) (Math.random() * 10);
-                soglia = 80;
-            }
-            case 2 -> {
-                percentuale = (int) ((Math.random() * 40) + 10);
-                soglia = 50;
-            }
-            case 3 -> {
-                percentuale = (int) ((Math.random() * 50) + 50);
-                soglia = 30;
-            }
-        }
-
-        gestioneInvestimenti.aggiungiInvestimento(new Investimento(importo, settimane, percentuale, soglia));
-    }
 }

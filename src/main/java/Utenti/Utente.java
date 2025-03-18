@@ -73,9 +73,12 @@ public class Utente {
         settimana++;
     }
 
-    public void investiSoldi(double importo) {
+    public boolean investiSoldi(double importo) {
+        if (importo > conto){
+            return false;
+        }
         conto -= importo;
-        registraTransazione("Investimento", importo);
+        return true;
     }
 
     public boolean depositaGuadagno(double importo) {

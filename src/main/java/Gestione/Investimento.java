@@ -26,7 +26,7 @@ public class Investimento {
 
     private double calcolaGuadagno() {
         int n = (int) (Math.random() * 100);
-        return (n < soglia) ? soldiInvestiti * (1 + (percentuale / 100.0)) : soldiInvestiti * (1 - (percentuale / 100.0));
+        return ((n < soglia) ? soldiInvestiti * (1 + (percentuale / 100.0)) : soldiInvestiti * (1 - (percentuale / 100.0))) * settimane;
     }
 
     public boolean avanzaSettimana() {
@@ -40,5 +40,10 @@ public class Investimento {
 
     public int getSettimane() {
         return settimane;
+    }
+
+    @Override
+    public String toString() {
+        return "Investimento : Guadagno  Stimato=" + guadagno + "\nSettimane Rimaste=" + settimane;
     }
 }

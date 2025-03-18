@@ -1,6 +1,7 @@
 package GUI;
 
 import Gestione.GestioneInvestimenti;
+import Gestione.Investimento;
 import Utenti.GestioneUtente;
 import Utenti.Utente;
 
@@ -8,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
 
 public class MainFrame extends JFrame {
     private final Utente utente;
@@ -26,7 +28,6 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Create panel
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         panel.setBackground(new Color(17, 21, 28));
@@ -36,22 +37,18 @@ public class MainFrame extends JFrame {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
 
-        // Account Balance Label
         contoLabel = new JLabel("Conto: €" + gestioneUtente.getUtente().getConto());
         contoLabel.setForeground(new Color(239, 111, 108));
         contoLabel.setFont(new Font("Arial", Font.BOLD, 24));
 
-        // Portfolio Label
         portafoglioLabel = new JLabel("Portafoglio: €" + gestioneUtente.getUtente().getPortafoglio());
         portafoglioLabel.setForeground(new Color(239, 111, 108));
         portafoglioLabel.setFont(new Font("Arial", Font.BOLD, 24));
 
-        // Week Label
         settimanaLabel = new JLabel("Settimana: " + gestioneUtente.getUtente().getSettimana());
         settimanaLabel.setForeground(Color.WHITE);
         settimanaLabel.setFont(new Font("Arial", Font.BOLD, 24));
 
-        // Buttons
         JButton depositaButton = new JButton("Deposita");
         JButton prelevaButton = new JButton("Preleva");
         JButton newInvestimentoButton = new JButton("Nuovo Investimento");
@@ -70,7 +67,6 @@ public class MainFrame extends JFrame {
             button.setBorderPainted(false);
             button.setPreferredSize(new Dimension(300, 50));
 
-            // Hover effect
             button.addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent e) {
                     button.setBackground(new Color(48, 107, 172));
@@ -93,7 +89,6 @@ public class MainFrame extends JFrame {
             }
         });
 
-        // Layout setup
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
@@ -124,22 +119,21 @@ public class MainFrame extends JFrame {
         gbc.gridwidth = 2;
         panel.add(salvaEdEsciButton, gbc);
 
-        // Action Listeners (Placeholder)
-        depositaButton.addActionListener(e -> deposita());
-        prelevaButton.addActionListener(e -> prelieva());
-        settimanaButton.addActionListener(e -> avanzaSettimana());
+        depositaButton.addActionListener(ignored -> deposita());
+        prelevaButton.addActionListener(ignored -> prelieva());
+        settimanaButton.addActionListener(ignored -> avanzaSettimana());
+        newInvestimentoButton.addActionListener(ignored -> newInvestimento());
+        viewInvestimentiButton.addActionListener(ignored -> viewInvestimenti());
 
-        newInvestimentoButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Nuovo Investimento clicked!"));
-        viewInvestimentiButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Guarda Investimenti clicked!"));
-        listaTransazioniButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Transazioni clicked!"));
 
-        salvaEdEsciButton.addActionListener(e -> {
+        listaTransazioniButton.addActionListener(ignored -> JOptionPane.showMessageDialog(null, "Transazioni clicked!"));
+
+        salvaEdEsciButton.addActionListener(ignored -> {
             gestioneUtente.salvaDatiUtente(utente, gestioneInvestimenti);
             JOptionPane.showMessageDialog(null, "Arrivederci");
             System.exit(0);
         });
 
-        // Add panel to frame
         add(panel);
         setVisible(true);
     }
@@ -199,5 +193,54 @@ public class MainFrame extends JFrame {
         update();
     }
 
+    private void newInvestimento() {
+        if (utente.getConto() <= 0) {
+            JOptionPane.showMessageDialog(this, "Non hai abbastanza Soldi nel Conto per Investire.", "Errore", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        InvestmentiFrame investmentiFrame = new InvestmentiFrame();
+        investmentiFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent windowEvent) {
+                investi(investmentiFrame.getVerifica(), investmentiFrame.getSettimane(), investmentiFrame.getRisk(), investmentiFrame.getImporto());
+            }
+        });
+    }
 
+    private void investi(boolean verifica, int settimane, int risk, double importo) {
+        if (!verifica) {
+            JOptionPane.showMessageDialog(this, "Investimento annullato.", "Informazione", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (!utente.investiSoldi(importo)) {
+            JOptionPane.showMessageDialog(this, "Non hai abbastanza Soldi nel Conto per Investire.", "Errore", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int percentuale = 0, soglia = 0;
+        switch (risk) {
+            case 1 -> {
+                percentuale = (int) (Math.random() * 10);
+                soglia = 80;
+            }
+            case 2 -> {
+                percentuale = (int) ((Math.random() * 40) + 10);
+                soglia = 50;
+            }
+            case 3 -> {
+                percentuale = (int) ((Math.random() * 50) + 50);
+                soglia = 30;
+            }
+        }
+
+        gestioneInvestimenti.aggiungiInvestimento(new Investimento(importo, settimane, percentuale, soglia));
+        update();
+        utente.registraTransazione("Investimento",importo);
+        JOptionPane.showMessageDialog(null, "Hai investito con successo");
+
+    }
+
+    private void viewInvestimenti(){
+
+    }
 }

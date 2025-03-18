@@ -15,7 +15,6 @@ public class LoginFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Create panel
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         panel.setBackground(new Color(17,21,28));
@@ -24,7 +23,6 @@ public class LoginFrame extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
 
 
-        // Username Label and Field
         JLabel userLabel = new JLabel("Username:");
         userLabel.setForeground(Color.WHITE);
         userLabel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -32,7 +30,7 @@ public class LoginFrame extends JFrame {
         JTextField userText = new JTextField(15);
         userText.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        // Password Label and Field
+
         JLabel passLabel = new JLabel("Password:");
         passLabel.setForeground(Color.WHITE);
         passLabel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -40,7 +38,7 @@ public class LoginFrame extends JFrame {
         JPasswordField passText = new JPasswordField(15);
         passText.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        // Login Button
+
         JButton loginButton = new JButton("Login");
         loginButton.setFont(new Font("Arial", Font.BOLD, 16));
         loginButton.setBackground(Color.GREEN);
@@ -48,7 +46,7 @@ public class LoginFrame extends JFrame {
         loginButton.setFocusPainted(false);
         loginButton.setBorderPainted(false);
 
-        // Register Button
+
         JButton registerButton = new JButton("Register");
         registerButton.setFont(new Font("Arial", Font.BOLD, 16));
         registerButton.setBackground(Color.RED);
@@ -56,7 +54,7 @@ public class LoginFrame extends JFrame {
         registerButton.setFocusPainted(false);
         registerButton.setBorderPainted(false);
 
-        // Layout Setup
+
         gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2; panel.add(userLabel, gbc);
         gbc.gridy = 1; panel.add(userText, gbc);
         gbc.gridy = 2; panel.add(passLabel, gbc);
@@ -65,8 +63,8 @@ public class LoginFrame extends JFrame {
         gbc.gridy = 4; gbc.gridwidth = 1; panel.add(loginButton, gbc);
         gbc.gridx = 1; panel.add(registerButton, gbc);
 
-        // Action Listener
-        loginButton.addActionListener(e -> {
+
+        loginButton.addActionListener(ignored -> {
             String username = userText.getText().trim();
             String password = new String(passText.getPassword()).trim();
             if (!username.isEmpty() && !password.isEmpty()) {
@@ -81,7 +79,7 @@ public class LoginFrame extends JFrame {
             }
         });
 
-        registerButton.addActionListener(e -> {
+        registerButton.addActionListener(ignored -> {
             String username = userText.getText().trim();
             String password = new String(passText.getPassword()).trim();
             if (!username.isEmpty() && !password.isEmpty()){
@@ -96,7 +94,7 @@ public class LoginFrame extends JFrame {
             }
         });
 
-        // Add panel to frame
+
         add(panel);
         setVisible(true);
     }
