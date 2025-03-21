@@ -64,7 +64,7 @@ public class GestioneUtente {
 
         if (!fileUtente.exists()) {
             this.utente = new Utente(username, password, 100, 0, 1);
-            salvaDatiUtente(this.utente,this.gestioneInvestimenti);
+            salvaDatiUtente(this.utente, this.gestioneInvestimenti);
             return true;
         }
         return false;
@@ -72,7 +72,7 @@ public class GestioneUtente {
     }
 
 
-    public void salvaDatiUtente(Utente utente,GestioneInvestimenti gestioneInvestimenti) {
+    public void salvaDatiUtente(Utente utente, GestioneInvestimenti gestioneInvestimenti) {
         String cartellaUtente = CARTELLA_DATI + "/" + utente.getNome();
         File cartella = new File(cartellaUtente);
         if (!cartella.exists()) {

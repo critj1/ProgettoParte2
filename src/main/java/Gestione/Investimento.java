@@ -42,8 +42,4 @@ public class Investimento {
         return settimane;
     }
 
-    @Override
-    public String toString() {
-        return "Investimento : Guadagno  Stimato=" + guadagno + "\nSettimane Rimaste=" + settimane;
-    }
 }

@@ -17,7 +17,7 @@ public class LoginFrame extends JFrame {
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
-        panel.setBackground(new Color(17,21,28));
+        panel.setBackground(new Color(17, 21, 28));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.anchor = GridBagConstraints.CENTER;
@@ -55,13 +55,22 @@ public class LoginFrame extends JFrame {
         registerButton.setBorderPainted(false);
 
 
-        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2; panel.add(userLabel, gbc);
-        gbc.gridy = 1; panel.add(userText, gbc);
-        gbc.gridy = 2; panel.add(passLabel, gbc);
-        gbc.gridy = 3; panel.add(passText, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        panel.add(userLabel, gbc);
+        gbc.gridy = 1;
+        panel.add(userText, gbc);
+        gbc.gridy = 2;
+        panel.add(passLabel, gbc);
+        gbc.gridy = 3;
+        panel.add(passText, gbc);
 
-        gbc.gridy = 4; gbc.gridwidth = 1; panel.add(loginButton, gbc);
-        gbc.gridx = 1; panel.add(registerButton, gbc);
+        gbc.gridy = 4;
+        gbc.gridwidth = 1;
+        panel.add(loginButton, gbc);
+        gbc.gridx = 1;
+        panel.add(registerButton, gbc);
 
 
         loginButton.addActionListener(ignored -> {
@@ -82,11 +91,11 @@ public class LoginFrame extends JFrame {
         registerButton.addActionListener(ignored -> {
             String username = userText.getText().trim();
             String password = new String(passText.getPassword()).trim();
-            if (!username.isEmpty() && !password.isEmpty()){
-                if (gestioneUtente.registraUtente(username,password)) {
+            if (!username.isEmpty() && !password.isEmpty()) {
+                if (gestioneUtente.registraUtente(username, password)) {
                     JOptionPane.showMessageDialog(null, "Registration Successful!");
                     dispose();
-                }else {
+                } else {
                     JOptionPane.showMessageDialog(null, "Username already exists", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {

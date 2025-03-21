@@ -2,6 +2,7 @@ package GUI;
 
 import Gestione.GestioneInvestimenti;
 import Gestione.Investimento;
+import Tools.TransazioniGraph;
 import Utenti.GestioneUtente;
 import Utenti.Utente;
 
@@ -10,6 +11,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 public class MainFrame extends JFrame {
     private final Utente utente;
@@ -17,16 +19,52 @@ public class MainFrame extends JFrame {
     private final JLabel contoLabel;
     private final JLabel portafoglioLabel;
     private final JLabel settimanaLabel;
+    private final ListaInvestimentiFrame lif;
+    private final GestioneUtente gestioneUtente;
 
     public MainFrame(GestioneUtente gestioneUtente) {
+        this.gestioneUtente = gestioneUtente;
         this.utente = gestioneUtente.getUtente();
         this.gestioneInvestimenti = gestioneUtente.getGestioneInvestimenti();
+        this.lif = new ListaInvestimentiFrame(gestioneInvestimenti.getInvestimenti());
 
 
         setTitle("Banca");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+
+        addWindowListener(new WindowListener() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                saveAndExit();
+            }
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+        });
+
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
@@ -53,11 +91,12 @@ public class MainFrame extends JFrame {
         JButton prelevaButton = new JButton("Preleva");
         JButton newInvestimentoButton = new JButton("Nuovo Investimento");
         JButton viewInvestimentiButton = new JButton("Guarda Investimenti");
-        JButton listaTransazioniButton = new JButton("Transazioni");
+        JButton graphTransazioniButton = new JButton("Grafico Transazioni");
         JButton settimanaButton = new JButton("Avanza Settimana");
+        JButton deleteUserButton = new JButton("DELETE USER");
         JButton salvaEdEsciButton = new JButton("Salva ed Esci");
 
-        JButton[] buttons = {depositaButton, prelevaButton, newInvestimentoButton, viewInvestimentiButton, listaTransazioniButton, settimanaButton, salvaEdEsciButton};
+        JButton[] buttons = {depositaButton, prelevaButton, newInvestimentoButton, viewInvestimentiButton, graphTransazioniButton, settimanaButton, salvaEdEsciButton};
 
         for (JButton button : buttons) {
             button.setFont(new Font("Arial", Font.BOLD, 18));
@@ -89,10 +128,35 @@ public class MainFrame extends JFrame {
             }
         });
 
+        deleteUserButton.setFont(new Font("Arial", Font.BOLD, 13));
+        deleteUserButton.setBackground(Color.RED);
+        deleteUserButton.setForeground(Color.WHITE);
+        deleteUserButton.setFocusPainted(false);
+        deleteUserButton.setBorderPainted(false);
+        deleteUserButton.setHorizontalAlignment(SwingConstants.RIGHT);
+        deleteUserButton.setPreferredSize(new Dimension(125, 20));
+
+        deleteUserButton.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                deleteUserButton.setBackground(new Color(255, 255, 10));
+            }
+
+            public void mouseExited(MouseEvent e) {
+                deleteUserButton.setBackground(Color.RED);
+            }
+        });
+
+
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 1;
         panel.add(settimanaLabel, gbc);
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.NONE;
+        panel.add(deleteUserButton, gbc);
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridx = 0;
+        gbc.gridwidth = 2;
         gbc.gridy = 1;
         panel.add(portafoglioLabel, gbc);
         gbc.gridy = 2;
@@ -111,7 +175,7 @@ public class MainFrame extends JFrame {
         panel.add(viewInvestimentiButton, gbc);
         gbc.gridy = 5;
         gbc.gridx = 0;
-        panel.add(listaTransazioniButton, gbc);
+        panel.add(graphTransazioniButton, gbc);
         gbc.gridx = 1;
         panel.add(settimanaButton, gbc);
         gbc.gridy = 6;
@@ -120,19 +184,20 @@ public class MainFrame extends JFrame {
         panel.add(salvaEdEsciButton, gbc);
 
         depositaButton.addActionListener(ignored -> deposita());
+
         prelevaButton.addActionListener(ignored -> prelieva());
+
         settimanaButton.addActionListener(ignored -> avanzaSettimana());
+
         newInvestimentoButton.addActionListener(ignored -> newInvestimento());
+
         viewInvestimentiButton.addActionListener(ignored -> viewInvestimenti());
 
+        graphTransazioniButton.addActionListener(ignored -> new TransazioniGraph(utente.getTransazioniPath()));
 
-        listaTransazioniButton.addActionListener(ignored -> JOptionPane.showMessageDialog(null, "Transazioni clicked!"));
+        deleteUserButton.addActionListener(ignored -> deleteUser());
 
-        salvaEdEsciButton.addActionListener(ignored -> {
-            gestioneUtente.salvaDatiUtente(utente, gestioneInvestimenti);
-            JOptionPane.showMessageDialog(null, "Arrivederci");
-            System.exit(0);
-        });
+        salvaEdEsciButton.addActionListener(ignored -> saveAndExit());
 
         add(panel);
         setVisible(true);
@@ -190,6 +255,9 @@ public class MainFrame extends JFrame {
             utente.registraTransazione("Guadagno Investimenti", guadagno);
             JOptionPane.showMessageDialog(this, "Uno o piu investimenti sono finiti.");
         }
+        if (lif.isVisible()) {
+            lif.updateVector(gestioneInvestimenti.getInvestimenti());
+        }
         update();
     }
 
@@ -235,12 +303,40 @@ public class MainFrame extends JFrame {
 
         gestioneInvestimenti.aggiungiInvestimento(new Investimento(importo, settimane, percentuale, soglia));
         update();
-        utente.registraTransazione("Investimento",importo);
+        if (lif.isVisible()) {
+            lif.updateVector(gestioneInvestimenti.getInvestimenti());
+        }
+        utente.registraTransazione("Investimento", importo);
         JOptionPane.showMessageDialog(null, "Hai investito con successo");
 
     }
 
-    private void viewInvestimenti(){
+    private void viewInvestimenti() {
+        if (!lif.isVisible()) {
+            lif.updateVector(gestioneInvestimenti.getInvestimenti());
+            lif.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "La Lista e gia attiva.", "Informazione", JOptionPane.WARNING_MESSAGE);
+        }
+    }
 
+    private void deleteUser() {
+        String verifica = JOptionPane.showInputDialog(this, " TYPE \"DELETE\" TO CONTINUE:", " ");
+        if (verifica.equalsIgnoreCase("DELETE")) {
+            utente.eliminaUtente();
+            JOptionPane.showMessageDialog(this, "Your account is being deleted.", "Informazione", JOptionPane.WARNING_MESSAGE);
+            dispose();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Hai sbagliato a scrivere");
+        }
+
+
+    }
+
+    private void saveAndExit() {
+        JOptionPane.showMessageDialog(null, "Saving...");
+        gestioneUtente.salvaDatiUtente(utente, gestioneInvestimenti);
+        System.exit(0);
     }
 }

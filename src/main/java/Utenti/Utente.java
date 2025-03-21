@@ -11,6 +11,7 @@ public class Utente {
     private final String nomeUtente;
     private final String password;
     private final String fileTransazioni;
+    private final String cartellaUtente;
     private double conto;
     private double portafoglio;
     private int settimana;
@@ -21,8 +22,8 @@ public class Utente {
         this.portafoglio = portafoglio;
         this.conto = conto;
         this.settimana = settimana;
-        String cartellaUtente = "DatiUtenti/" + nomeUtente;
-        this.fileTransazioni = cartellaUtente + "/transazioni.txt";
+        this.cartellaUtente = "DatiUtenti/" + nomeUtente;
+        this.fileTransazioni = cartellaUtente + "/transazioni.csv";
 
         File cartella = new File(cartellaUtente);
         if (!cartella.exists()) {
@@ -42,7 +43,7 @@ public class Utente {
     public void registraTransazione(String tipo, double importo) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileTransazioni, true))) {
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            writer.write(timestamp + " - " + tipo + ": " + importo + "\n");
+            writer.write(timestamp + ";" + conto + ";" + portafoglio + ";" + tipo + ";" + importo + "\n");
         } catch (IOException e) {
             System.out.println("Errore nella registrazione della transazione.");
         }
@@ -74,7 +75,7 @@ public class Utente {
     }
 
     public boolean investiSoldi(double importo) {
-        if (importo > conto){
+        if (importo > conto) {
             return false;
         }
         conto -= importo;
@@ -102,5 +103,18 @@ public class Utente {
             return true;
         }
         return false;
+    }
+
+    public String getTransazioniPath() {
+        return fileTransazioni;
+    }
+
+    public void eliminaUtente() {
+        File cartellaElim = new File(this.cartellaUtente);
+        File dataElim = new File(this.cartellaUtente + "/data.txt");
+        File transazioniElim = new File(this.cartellaUtente + "/transazioni.csv");
+        if (dataElim.delete() && transazioniElim.delete()) {
+            cartellaElim.delete();
+        }
     }
 }

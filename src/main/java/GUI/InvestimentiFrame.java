@@ -4,21 +4,19 @@ import javax.swing.*;
 import java.awt.*;
 
 class InvestmentiFrame extends JFrame {
-    private int settimane = 0;
-    private int risk = 0;
-    private double importo = 0;
-    private boolean verifica = false;
     private final JPanel panel = new JPanel();
     private final GridBagConstraints gbc = new GridBagConstraints();
-
     private final JButton shortTermButton;
     private final JButton midTermButton;
     private final JButton longTermButton;
-
     private final JLabel importoLable;
     private final JTextField amountField;
     private final JButton investButton;
     private final JButton cancelButton;
+    private int settimane = 0;
+    private int risk = 0;
+    private double importo = 0;
+    private boolean verifica = false;
 
     public InvestmentiFrame() {
         setSize(400, 500);
@@ -28,7 +26,7 @@ class InvestmentiFrame extends JFrame {
 
 
         panel.setLayout(new GridBagLayout());
-        panel.setBackground(new Color(17,21,28));
+        panel.setBackground(new Color(17, 21, 28));
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.BOTH;
@@ -44,18 +42,18 @@ class InvestmentiFrame extends JFrame {
         midTermButton = new JButton("Media Durata");
         longTermButton = new JButton("Lunga Durata");
 
-        importoLable= new JLabel("Importo");
+        importoLable = new JLabel("Importo");
         importoLable.setForeground(Color.WHITE);
         importoLable.setFont(new Font("Arial", Font.BOLD, 32));
         importoLable.setHorizontalAlignment(SwingConstants.CENTER);
 
         amountField = new JTextField(15);
-        amountField.setFont(new Font("Arial",Font.BOLD,16));
+        amountField.setFont(new Font("Arial", Font.BOLD, 16));
         amountField.setFont(new Font("Arial", Font.PLAIN, 16));
         investButton = new JButton("Investi");
         cancelButton = new JButton("Annulla");
 
-        JButton[] buttons = {lowRiskButton, mediumRiskButton, highRiskButton,shortTermButton,midTermButton,longTermButton,investButton,cancelButton};
+        JButton[] buttons = {lowRiskButton, mediumRiskButton, highRiskButton, shortTermButton, midTermButton, longTermButton, investButton, cancelButton};
 
         for (JButton button : buttons) {
             button.setFont(new Font("Arial", Font.BOLD, 18));
@@ -68,37 +66,42 @@ class InvestmentiFrame extends JFrame {
         cancelButton.setBackground(Color.RED);
 
 
-
-        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2; panel.add(lowRiskButton, gbc);
-        gbc.gridy = 1; panel.add(mediumRiskButton, gbc);
-        gbc.gridy = 2; panel.add(highRiskButton, gbc);
-        gbc.gridy = 3; panel.add(cancelButton, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        panel.add(lowRiskButton, gbc);
+        gbc.gridy = 1;
+        panel.add(mediumRiskButton, gbc);
+        gbc.gridy = 2;
+        panel.add(highRiskButton, gbc);
+        gbc.gridy = 3;
+        panel.add(cancelButton, gbc);
 
         lowRiskButton.addActionListener(ignored -> {
-            risk=1;
+            risk = 1;
             termButtons();
         });
         mediumRiskButton.addActionListener(ignored -> {
-            risk=2;
+            risk = 2;
             termButtons();
 
         });
         highRiskButton.addActionListener(ignored -> {
-            risk=3;
+            risk = 3;
             termButtons();
         });
 
         shortTermButton.addActionListener(ignored -> {
-            settimane=1;
+            settimane = 1;
             importButtons();
         });
         midTermButton.addActionListener(ignored -> {
-            settimane=2;
+            settimane = 2;
             importButtons();
 
         });
         longTermButton.addActionListener(ignored -> {
-            settimane=3;
+            settimane = 3;
             importButtons();
         });
 
@@ -115,7 +118,7 @@ class InvestmentiFrame extends JFrame {
                         this.importo = soldi;
                         this.verifica = true;
                         dispose();
-                    }else {
+                    } else {
                         JOptionPane.showMessageDialog(this, "Inserisci un numero maggiore di 0.", "Errore", JOptionPane.ERROR_MESSAGE);
                     }
 
@@ -142,33 +145,45 @@ class InvestmentiFrame extends JFrame {
         return settimane;
     }
 
-    public boolean getVerifica(){
+    public boolean getVerifica() {
         return verifica;
     }
 
-    private void resetPanel(){
+    private void resetPanel() {
         panel.removeAll();
         panel.updateUI();
     }
 
-    private void termButtons(){
+    private void termButtons() {
         resetPanel();
-        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2; panel.add(shortTermButton, gbc);
-        gbc.gridy = 1; panel.add(midTermButton, gbc);
-        gbc.gridy = 2; panel.add(longTermButton, gbc);
-        gbc.gridy = 3; panel.add(cancelButton, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        panel.add(shortTermButton, gbc);
+        gbc.gridy = 1;
+        panel.add(midTermButton, gbc);
+        gbc.gridy = 2;
+        panel.add(longTermButton, gbc);
+        gbc.gridy = 3;
+        panel.add(cancelButton, gbc);
         panel.updateUI();
     }
 
-    private void importButtons(){
+    private void importButtons() {
         resetPanel();
-        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2; panel.add(importoLable, gbc);
-        gbc.gridy = 1; panel.add(amountField, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        panel.add(importoLable, gbc);
+        gbc.gridy = 1;
+        panel.add(amountField, gbc);
         gbc.gridwidth = 1;
-        gbc.gridy = 2; panel.add(investButton, gbc);
-        gbc.gridx = 1; panel.add(cancelButton, gbc);
+        gbc.gridy = 2;
+        panel.add(investButton, gbc);
+        gbc.gridx = 1;
+        panel.add(cancelButton, gbc);
         panel.updateUI();
     }
-    
+
 }
 
