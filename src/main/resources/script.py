@@ -1,7 +1,6 @@
-import sys
-
 import matplotlib.pyplot as plt
 import polars as ps
+import sys
 
 
 # Load the data from the file passed as an argument

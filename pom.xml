@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.itis.classe.studente</groupId>
-  <artifactId>ITIS_Maven_Example</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <artifactId>Capitalis-Bank</artifactId>
+  <version>5</version>
   <packaging>jar</packaging>
 
-  <name>ITIS_Maven_Example</name>
+  <name>Capitalis-Bank</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,7 +27,18 @@
           <release>23</release>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>Gestione.Main</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
-
 </project>
