@@ -331,7 +331,6 @@ public class MainFrame extends JFrame {
             JOptionPane.showMessageDialog(null, "Hai sbagliato a scrivere");
         }
 
-
     }
 
     private void saveAndExit() {
@@ -339,4 +338,5 @@ public class MainFrame extends JFrame {
         gestioneUtente.salvaDatiUtente(utente, gestioneInvestimenti);
         System.exit(0);
     }
+
 }

@@ -31,6 +31,6 @@ if __name__ == "__main__":
         sys.exit(1)
 
     # Get the file path from the command-line argument
-    file_path = sys.argv[1]
-    data = load_data(file_path)
-    plot_quantity_changes(data)
+    transazioni_path = sys.argv[1]
+    data_transazioni = load_data(transazioni_path)
+    plot_quantity_changes(data_transazioni)

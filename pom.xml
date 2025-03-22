@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.itis.classe.studente</groupId>
   <artifactId>Capitalis-Bank</artifactId>
-  <version>5</version>
+  <version>6</version>
   <packaging>jar</packaging>
 
   <name>Capitalis-Bank</name>
@@ -15,6 +15,18 @@
   </properties>
 
   <dependencies>
+    <dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter-api</artifactId>
+    <version>5.9.1</version>
+    <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.9.1</version>
+    </dependency>
+
   </dependencies>
 
   <build>

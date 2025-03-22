@@ -108,4 +108,5 @@ public class ListaInvestimentiFrame extends JFrame {
 
         panel.updateUI();
     }
+
 }

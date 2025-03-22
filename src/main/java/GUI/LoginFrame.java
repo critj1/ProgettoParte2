@@ -111,4 +111,5 @@ public class LoginFrame extends JFrame {
     public GestioneUtente getGestioneUtente() {
         return gestioneUtente;
     }
+
 }

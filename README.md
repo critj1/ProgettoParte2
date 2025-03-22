@@ -26,7 +26,7 @@ pip install -r requirements.txt
 
 ```bash
 mvn clean package
-java -jar target/Capitalis-Bank-5.jar
+java -jar target/Capitalis-Bank-6.jar
 ```
 
 ## Intellj

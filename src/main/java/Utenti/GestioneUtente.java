@@ -76,7 +76,9 @@ public class GestioneUtente {
         String cartellaUtente = CARTELLA_DATI + "/" + utente.getNome();
         File cartella = new File(cartellaUtente);
         if (!cartella.exists()) {
-            cartella.mkdirs();
+            if (!cartella.mkdirs()){
+                System.out.println("Cartella dell' utente non e' stata creata);");
+            }
         }
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(cartellaUtente + "/data.txt"))) {

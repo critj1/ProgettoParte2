@@ -47,7 +47,5 @@ public class InvestimentoRenderer extends JPanel implements ListCellRenderer<Inv
         }
         return this;
     }
+
 }
-
-
-

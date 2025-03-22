@@ -3,7 +3,7 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 
-class InvestmentiFrame extends JFrame {
+public class InvestmentiFrame extends JFrame {
     private final JPanel panel = new JPanel();
     private final GridBagConstraints gbc = new GridBagConstraints();
     private final JButton shortTermButton;
@@ -186,4 +186,3 @@ class InvestmentiFrame extends JFrame {
     }
 
 }
-

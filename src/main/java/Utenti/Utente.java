@@ -27,13 +27,17 @@ public class Utente {
 
         File cartella = new File(cartellaUtente);
         if (!cartella.exists()) {
-            cartella.mkdirs();
+            if (!cartella.mkdirs()) {
+                System.out.println("Cartella dell' utente non e' stata creata");
+            }
         }
 
         File file = new File(fileTransazioni);
         if (!file.exists()) {
             try {
-                file.createNewFile();
+                if (!file.createNewFile()) {
+                    System.out.println("File Transazioni.csv non e' stato creato");
+                }
             } catch (IOException e) {
                 System.out.println("Errore nella creazione del file transazioni.");
             }
@@ -111,10 +115,26 @@ public class Utente {
 
     public void eliminaUtente() {
         File cartellaElim = new File(this.cartellaUtente);
-        File dataElim = new File(this.cartellaUtente + "/data.txt");
-        File transazioniElim = new File(this.cartellaUtente + "/transazioni.csv");
-        if (dataElim.delete() && transazioniElim.delete()) {
-            cartellaElim.delete();
+
+        if (!cartellaElim.exists()) {
+            System.out.println("La cartella non esiste.");
+            return;
+        }
+
+        File[] files = cartellaElim.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (!file.delete()) {
+                    System.out.println("Impossibile eliminare " + file.getName());
+                }
+            }
+        }
+
+        if (cartellaElim.delete()) {
+            System.out.println("Cartella utente eliminata.");
+        } else {
+            System.out.println("Errore: La cartella non è stata eliminata (potrebbe contenere file nascosti).");
         }
     }
+
 }
