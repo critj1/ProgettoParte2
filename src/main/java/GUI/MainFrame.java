@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.Objects;
 
 public class MainFrame extends JFrame {
     private final Utente utente;
@@ -33,6 +34,9 @@ public class MainFrame extends JFrame {
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("img/logoMain.jpg")));
+        setIconImage(icon.getImage());
 
         addWindowListener(new WindowListener() {
             @Override
@@ -64,7 +68,6 @@ public class MainFrame extends JFrame {
             public void windowDeactivated(WindowEvent e) {
             }
         });
-
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
@@ -322,13 +325,15 @@ public class MainFrame extends JFrame {
 
     private void deleteUser() {
         String verifica = JOptionPane.showInputDialog(this, " TYPE \"DELETE\" TO CONTINUE:", " ");
-        if (verifica.equalsIgnoreCase("DELETE")) {
-            utente.eliminaUtente();
-            JOptionPane.showMessageDialog(this, "Your account is being deleted.", "Informazione", JOptionPane.WARNING_MESSAGE);
-            dispose();
+        if (verifica != null) {
+            if (verifica.equalsIgnoreCase("DELETE")) {
+                utente.eliminaUtente();
+                JOptionPane.showMessageDialog(this, "Your account is being deleted.", "Informazione", JOptionPane.WARNING_MESSAGE);
+                dispose();
 
-        } else {
-            JOptionPane.showMessageDialog(null, "Hai sbagliato a scrivere");
+            } else {
+                JOptionPane.showMessageDialog(null, "Hai sbagliato a scrivere");
+            }
         }
 
     }

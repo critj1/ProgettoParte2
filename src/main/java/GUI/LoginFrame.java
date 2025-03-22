@@ -4,6 +4,7 @@ import Utenti.GestioneUtente;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class LoginFrame extends JFrame {
     private final GestioneUtente gestioneUtente = new GestioneUtente();
@@ -14,6 +15,9 @@ public class LoginFrame extends JFrame {
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("img/logoLogin.jpg")));
+        setIconImage(icon.getImage());
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
